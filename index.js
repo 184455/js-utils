@@ -18,7 +18,7 @@ function saveToLocalStorage(key, value) {
     }
   }
 
-  return localStorage.setItem(key, value) ? true : false;
+  return localStorage.setItem(key, value);
 }
 
 /**
@@ -83,3 +83,125 @@ export function getData(el, name, val) {
     return el.getAttribute(prop);
   }
 }
+
+
+/*----------------------校验手机号-------------------------------*/
+/**
+ * 校验手机号
+ * @param phone
+ * @returns {boolean}
+ */
+export function isPoneAvailable(phone) {
+  var PhoneReg = /^[1][3,4,5,7,8][0-9]{9}$/
+
+  return PhoneReg.test(phone)
+}
+
+/*-----------------------微信相关----------------------------------*/
+/**
+ * 判断平台
+ * @return {String} 平台
+ */
+export function getUserOperation () {
+  const ua = navigator.userAgent.toLowerCase()
+
+  if (/MicroMessenger/i.test(ua)) {
+    return 'weixin'
+  } else if (/iPhone|iPad|iPod|iOS/i.test(ua)) {
+    return 'ios'
+  } else if (/Android/i.test(ua)) {
+    return 'android'
+  } else {
+    return 'other'
+  }
+}
+
+/**
+ * 去掉字符串空格
+ */
+export function trimFun (s) {
+  return s.replace(/(^\s*)|(\s*$)/g, '')
+}
+
+/**
+ * 解析URL中的全部参数，返回键值对格式的对象
+ * @param url
+ * @returns {*}
+ */
+export function parseQueryString (url) {
+  let str = url.split('?')[1]
+  if (!str) {
+    return {}
+  }
+  let items = str.split('&')
+  let result = {}
+  let res = {}
+
+  for (let i = 0, len = items.length; i < len; ++i) {
+    res = items[i].split('=')
+    result[res[0]] = res[1]
+  }
+
+  return result
+}
+
+/**
+ * 通过base64反向求出源文件的大小
+ * @param base64
+ * @returns {number} 返回单位：KB
+ */
+export function computedBase64Size (base64) {
+  // 首先把头部的data:image/png;base64,（注意有逗号）去掉
+  let base64Str = base64.substring(22)
+
+  /**
+   * Base64编码要求把3个8位字节（3*8=24）转化为4个6位的字节（4*6=24），之后在6位的前面补两个0，
+   * 形成8位一个字节的形式，如果剩下的字符不足3个字节，则用0填充，输出字符使用’=’
+   * 根据原理，反向推导出真正的图片字节数
+   */
+  let base64StrLength = base64Str.length * 3 / 4
+
+  // 得到字节单位
+  let BitUnit = base64StrLength / 1024 / 1024
+
+  // 得到以KB为单位的数值，不能一步到位，因为会发生溢出
+  return BitUnit / 1024
+}
+
+/**
+ * ES5方法，数组去重
+ * @param arr 需要去重的数组源数组
+ * @returns {Array} 返回结果数组
+ */
+export function ES5UniqueArrayItem (arr) {
+  if (!Array.isArray(arr)) {
+    // 不是数组就返回
+    return [];
+  }
+
+  var ret = [];
+  arr.forEach(function (item) {
+    if (ret.indexOf(item) === -1) {
+      // 在结果集中没有找到相应的元素
+      ret.push(item);
+    }
+  })
+
+  return ret;
+}
+
+/**
+ * ES6方法，数组去重
+ * @param arr 需要去重的数组源数组
+ * @returns {Array} 返回结果数组
+ */
+export function ES6UniqueArrayItem (arr) {
+  if (!Array.isArray(arr)) {
+    // 不是数组就返回
+    return [];
+  }
+
+  // return [...new Set(arr)]; // 扩展运算符也可以办到
+  return Array.from(new Set(arr));
+}
+
