@@ -205,3 +205,28 @@ export function ES6UniqueArrayItem (arr) {
   return Array.from(new Set(arr));
 }
 
+/**
+ * 将对象拼接成 URL 地址的 Query 参数形式
+ * @param obj 层级深度为一的对象
+ * @returns {string} 拼接的query参数
+ */
+export function objectToRequestQuery (obj) {
+  let query = ''
+  for (let key in obj) {
+    if (obj[key].toString().length > 0) {
+      // 只有有值的项才会被添加
+      query += `&${key}=${obj[key].toString()}`
+    }
+  }
+
+  return query
+}
+
+/**
+ * 判断一个变量是否严格 等于 undefined
+ * @param {any} variable 需要判断的数据
+ * @returns {boolean} 布尔值
+ */
+export function isUndef (variable) {
+  return variable === undefined
+}
