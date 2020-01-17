@@ -230,3 +230,53 @@ export function objectToRequestQuery (obj) {
 export function isUndef (variable) {
   return variable === undefined
 }
+
+/**
+ * 获取 2020-01-17 11:30:08 格式的时间
+ * @param {string} div 分隔符
+ */
+export function getCurrentDataTime (div = '-') {
+  const time = new Date()
+  const year = time.getFullYear()
+  const month = time.getMonth() + 1 > 9 ? time.getMonth() + 1 : '0' + (time.getMonth() + 1)
+  const day = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+  const hour = time.getHours() > 9 ? time.getHours() : '0' + time.getHours()
+  const min = time.getMinutes() > 9 ? time.getMinutes() : '0' + time.getMinutes()
+  const seconds = time.getSeconds() > 9 ? time.getSeconds() : '0' + time.getSeconds()
+
+  return year + div + month + div + day + ' ' + hour + ':' + min + ':' + seconds
+}
+
+/**
+ * 判断平台
+ * @return {String} 平台
+ */
+export function detectOS () {
+  const ua = navigator.userAgent.toLowerCase()
+  if (/MicroMessenger/i.test(ua)) {
+    return 'weixin'
+  } else if (/iPhone|iPad|iPod|iOS/i.test(ua)) {
+    return 'ios'
+  } else if (/Android/i.test(ua)) {
+    return 'android'
+  } else {
+    return 'other'
+  }
+}
+
+/**
+ * 解析并返回当前页面的所有 Cookie
+ * @return {object} cookies
+ */
+export function getAndParseCookies () {
+  const cookies = document.cookie
+  if (!cookies) return {}
+  const temp = cookies.replace(/\s/g, '') // 删除所有的空格
+  const cookieArr = temp.split(';') // 根据分号切割称键值对
+  const res = {}
+  cookieArr.forEach(o => {
+    const [key, val] = o.split('=')
+    res[key] = val
+  })
+  return res
+}
