@@ -280,3 +280,27 @@ export function getAndParseCookies () {
   })
   return res
 }
+
+/**
+ * 判断一个字符串是否有表情符号非法字符
+ * @param {string} str 需要校验的数据
+ */
+export function hasEmoji (str) {
+  const patter = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
+  return patter.test(str)
+}
+
+/**
+ * 把标签非法字符串替换
+ * @param {string} str 目标字符串
+ */
+export function replaceEmoji (str) {
+  const patter = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g
+  return str.replace(patter, char => {
+    if (char.length === 2) {
+      return ''
+    } else {
+      return char
+    }
+  })
+}
