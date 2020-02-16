@@ -304,3 +304,39 @@ export function replaceEmoji (str) {
     }
   })
 }
+
+/**
+ * 求两个数的最大公约数
+ * 思路：辗转相除法
+ * @param {number} a 整数a
+ * @param {number} b 整数b
+ */
+export function greatestCommonDivisor (a, b) {
+  if (!a || !b) return false
+  let [bigNum, smallNum] = a > b ? [a, b] : [b, a]
+  let temp = 1
+  let res = NaN
+
+  while(temp) {
+    temp = bigNum % smallNum
+    if (temp) {
+      bigNum = smallNum
+      smallNum = temp
+    } else {
+      res = smallNum
+    }
+  }
+  return res
+}
+
+/**
+ * 求解两个数的最小公倍数
+ * 思路：a 乘以b 再除以 他们的最大公约数
+ * @param {number} a 整数a
+ * @param {number} b 整数b
+ */
+export function minimumCommonMultiple (a, b) {
+  if (!a || !b) return false
+  const greatestCommonDivisorRes = greatestCommonDivisor(a, b)
+  return (a * b) / greatestCommonDivisorRes
+}
