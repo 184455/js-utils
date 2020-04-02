@@ -340,3 +340,15 @@ export function minimumCommonMultiple (a, b) {
   const greatestCommonDivisorRes = greatestCommonDivisor(a, b)
   return (a * b) / greatestCommonDivisorRes
 }
+
+/**
+ * 返回 两个数之间的随机数，包含边界
+ * @param {number} Min 最小值
+ * @param {number} Max 最大值
+ */
+const randomNumBoth = (Min, Max) => {
+  const Range = Max - Min
+  const Rand = Math.random()
+  const num = Min + Math.round(Rand * Range) // 四舍五入
+  return num
+}
