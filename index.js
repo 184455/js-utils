@@ -352,3 +352,20 @@ const randomNumBoth = (Min, Max) => {
   const num = Min + Math.round(Rand * Range) // 四舍五入
   return num
 }
+
+/**
+ * 下载文件
+ * @param {string} url - 文件地址
+ * @param {string} filename - 文件名
+ */
+export function download(url, filename) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_parent';
+  if ('download' in a) {
+    a.download = filename;
+  }
+  (document.body || document.documentElement).appendChild(a);
+  a.click();
+  a.remove();
+}
