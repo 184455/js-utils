@@ -56,6 +56,20 @@ export function addClass(el, className) {
   el.className = classNameList.join(' ');
 }
 
+/**
+ * 删除某个元素的样式
+ * @param el {DOM} Must
+ * @param className
+ */
+export function deleteClass(el, className) {
+  if (hasClass(el, className)) {
+    return;
+  }
+
+  const classNameList = el.className.split(' ').filter(name => name !== className);
+  el.className = classNameList.join(' ');
+}
+
 /*
 * 判断一个元素是否有某个样式的名称
 * @param el {DOM}
@@ -368,4 +382,31 @@ export function download(url, filename) {
   (document.body || document.documentElement).appendChild(a);
   a.click();
   a.remove();
+}
+
+/**
+ * 判断是否是数组
+ * @param {array} arr - 检测数组
+ * @returns {boolean}
+ */
+export function isArray(arr) {
+  return Array.isArray(arr)
+}
+
+/**
+ * 检测是否是非空数组
+ * @param {array} arr - 检测数组
+ * @returns {boolean}
+ */
+export function isEmptyArray(arr) {
+  return !(Array.isArray(arr) && arr.length > 0)
+}
+
+/**
+ * 检测对象是否等于 '{}'，即没有定义任何键值对
+ * @param {object} obj - 检测对象
+ * @returns {boolean}
+ */
+export function isEmptyObject(obj) {
+  return JSON.stringify(obj) === '{}'
 }
